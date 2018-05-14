@@ -1,0 +1,127 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+public class TileEdit : EditorWindow
+{
+
+    private GUIStyle _labelStyle;
+    private GUIStyle _labelStyle2;
+    private int ttile;
+    private int i;
+    private int j;
+    public static void OpenWindow(int tile, int i, int j) 
+    {
+        var w = GetWindow<TileEdit>();
+        w.wantsMouseMove = true;
+        w.ttile = tile;
+        w.i = i;
+        w.j = j;
+        w.Show();
+    }
+
+    private void OnGUI()
+    {
+        _labelStyle = new GUIStyle();
+        _labelStyle.fontStyle = FontStyle.Bold;
+        _labelStyle.fontSize = 18;
+        _labelStyle.alignment = TextAnchor.MiddleCenter;
+        _labelStyle2 = new GUIStyle();
+        _labelStyle2.alignment = TextAnchor.MiddleCenter;
+
+        maxSize = new Vector2(300, 400);
+        minSize = new Vector2(300, 400);
+        EditorGUILayout.LabelField("Tile Edit", _labelStyle);
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+
+        switch (ttile)
+        {
+            case 0:
+                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile1"), ScaleMode.ScaleToFit);
+                EditorGUILayout.LabelField("Floor tile", _labelStyle2);
+                break;
+            case 1:
+                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile2"), ScaleMode.ScaleToFit);
+                EditorGUILayout.LabelField("Wall/Obstacle tile", _labelStyle2);
+                break;
+            case 2:
+                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile3"), ScaleMode.ScaleToFit);
+                EditorGUILayout.LabelField("Enemy tile", _labelStyle2);
+                break;
+            case 3:
+                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile4"), ScaleMode.ScaleToFit);
+                EditorGUILayout.LabelField("NPC tile", _labelStyle2);
+                break;
+            case 4:
+                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile5"), ScaleMode.ScaleToFit);
+                EditorGUILayout.LabelField("Interactible tile", _labelStyle2);
+                break;
+            case 5:
+                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile6"), ScaleMode.ScaleToFit);
+                EditorGUILayout.LabelField("Door/Trapdoor tile", _labelStyle2);
+                break;
+        }
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+
+        EditorGUILayout.LabelField("Change it into:", _labelStyle2);
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+
+        var col = GUI.backgroundColor;
+
+        EditorGUILayout.BeginHorizontal();
+        GUI.backgroundColor = Color.white;
+        if (GUILayout.Button("", GUILayout.Width(42), GUILayout.ExpandWidth(false), GUILayout.Height(42)))
+        {
+            ttile = 0;
+            TilingEditor.tiles[i, j] = ttile;
+            Repaint();
+        }
+        GUI.backgroundColor = Color.black;
+        if (GUILayout.Button("", GUILayout.Width(46), GUILayout.ExpandWidth(false), GUILayout.Height(46)))
+        {
+            ttile = 1;
+            TilingEditor.tiles[i, j] = ttile;
+            Repaint();
+        }
+        GUI.backgroundColor = Color.red;
+        if (GUILayout.Button("", GUILayout.Width(46), GUILayout.ExpandWidth(false), GUILayout.Height(46)))
+        {
+            ttile = 2;
+            TilingEditor.tiles[i, j] = ttile;
+            Repaint();
+        }
+        GUI.backgroundColor = Color.green;
+        if (GUILayout.Button("", GUILayout.Width(46), GUILayout.ExpandWidth(false), GUILayout.Height(46)))
+        {
+            ttile = 3;
+            TilingEditor.tiles[i, j] = ttile;
+            Repaint();
+        }
+        GUI.backgroundColor = Color.yellow;
+        if (GUILayout.Button("", GUILayout.Width(46), GUILayout.ExpandWidth(false), GUILayout.Height(46)))
+        {
+            ttile = 4;
+            TilingEditor.tiles[i, j] = ttile;
+            Repaint();
+        }
+        GUI.backgroundColor = Color.blue;
+        if (GUILayout.Button("", GUILayout.Width(46), GUILayout.ExpandWidth(false), GUILayout.Height(46)))
+        {
+            ttile = 5;
+            TilingEditor.tiles[i, j] = ttile;
+            Repaint();
+        }
+        EditorGUILayout.EndHorizontal();
+        GUI.backgroundColor = col;
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("Close"))
+            Close();
+    }
+}
