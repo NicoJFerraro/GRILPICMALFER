@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(PencilTool))]
+//[CustomEditor(typeof(PencilTool))]
 public class PenciToolEditor : Editor {
 
     private PencilTool _target;
@@ -22,7 +22,7 @@ public class PenciToolEditor : Editor {
         {
             if (GUILayout.Button("Place Tile"))
             {
-                _target.InstantiateTile();
+                //_target.InstantiateTile();
             }
         } 
     }

@@ -9,6 +9,7 @@ public class PencilTool : MonoBehaviour {
     public float gridX;
     public float gridY;
     public float gridZ;
+    public static bool pencilOn;
     public GameObject tilePrefab;
 
 	
@@ -30,15 +31,13 @@ public class PencilTool : MonoBehaviour {
             var differenceZ = pos.z % gridZ;
 
             boi[i].position = new Vector3(pos.x - differenceX, pos.y - differenceY, pos.z - differenceZ);
-        }
-    
+        }      
     }
-    public void InstantiateTile()
+   
+        
+   
+    public void Placing()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            GameObject.Instantiate(tilePrefab, transform.position, transform.rotation);
-
-        }
+        Debug.Log("LALADSLALASLSA");
     }
 }
