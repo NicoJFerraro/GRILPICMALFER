@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor; 
 using System;
+using Object = UnityEngine.Object;
+
 public class LevelMaker : EditorWindow
 {
 
     private GUIStyle myStyle;
+
+    private Object focusedObject;
 
     private bool toogleGroupActivated;
     private bool RpgMap;
@@ -16,10 +20,16 @@ public class LevelMaker : EditorWindow
     private float high;
     private float width;
 
+    private string newMapName;
+    private string SearchName;
+
+
+
     [MenuItem("CustomTools/LevelMaker")]
 
     public static void OpenWindow()
     {
+        
         LevelMaker myWindow = (LevelMaker)GetWindow(typeof(LevelMaker));
         myWindow.wantsMouseMove = true;
         myWindow.Show();
@@ -27,7 +37,7 @@ public class LevelMaker : EditorWindow
     private void OnGUI()
     {
         All();
-        
+
     }
 
     private void All()
@@ -39,7 +49,7 @@ public class LevelMaker : EditorWindow
         myStyle.fontSize = 20;
         MiscStuff();
         EditorGUILayout.Space();
-        if(GUILayout.Button("Load Map", GUILayout.Width(100), GUILayout.ExpandWidth(false), GUILayout.Height(25)))
+        if (GUILayout.Button("Load Map", GUILayout.Width(100), GUILayout.ExpandWidth(false), GUILayout.Height(25)))
         {
             GetWindow(typeof(LoadsMap)).Show();
         }
@@ -70,20 +80,64 @@ public class LevelMaker : EditorWindow
         if (PlatformMap) RpgMap = false;
         if (!PlatformMap) RpgMap = true;
         EditorGUILayout.Space();
+        Grill();
+        Assets();
+        //if (GUILayout.Button("Add Asset"))
+        //{
+        //    AddNew();
+        //}
+
+        FolderManagement();
+
+
+        EditorGUILayout.EndToggleGroup();
+
+
+    }
+    private void Grill()
+    {
         high = EditorGUILayout.FloatField("High", high);
         width = EditorGUILayout.FloatField("Width", width);
-        Assets();
-        GUILayout.Button("Create", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(25));
-        EditorGUILayout.EndToggleGroup();
-        
-
     }
     private void Assets()
     {
-        showFoldout = EditorGUILayout.Foldout(showFoldout, "Assets: " );
-        if (showFoldout)
-            EditorGUILayout.HelpBox("Assets a usar", MessageType.None);
 
+        showFoldout = EditorGUILayout.Foldout(showFoldout, "Assets: ");
+        if (showFoldout)
+        {
+            focusedObject = EditorGUILayout.ObjectField("Selected object: ", focusedObject, typeof(Object), true);
+            if (focusedObject == null)
+            {
+                EditorGUILayout.HelpBox("Assets not assigned", MessageType.Info);
+            }
+        }
 
     }
+    private void FolderManagement()
+    {
+
+        EditorGUILayout.LabelField("Map name: ", GUILayout.Width(75));
+        newMapName = EditorGUILayout.TextField(newMapName);
+        if (newMapName != null && GUILayout.Button("Create", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(25)))
+        {
+
+            if (!AssetDatabase.IsValidFolder(newMapName))
+            {
+
+                AssetDatabase.CreateFolder("Assets", newMapName);
+
+            }
+        }
+        if (newMapName == null)
+        {
+            EditorGUILayout.HelpBox("Map name not found", MessageType.Warning);
+        }
+
+    }
+
+    private void AddNew()
+    {
+        //AssetsDrag.Add(null);
+    }
+    
 }
