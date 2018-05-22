@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[CustomEditor(typeof(PencilTool))]
 public class MouseEvent : Editor
 {
+    private PencilTool _target;
 
+    private void OnEnable()
+    {
+        _target = (PencilTool)target;
+    }
 
     private void OnSceneGUI()
     {
@@ -16,7 +22,10 @@ public class MouseEvent : Editor
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit, 1000.0f))
             {
-                Debug.Log("LALADSLALASLSA");
+                if (PencilTool.pencilOn == true)
+                {
+                    _target.Placing();
+                }
             }
         }
     }
