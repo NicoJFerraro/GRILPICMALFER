@@ -9,23 +9,33 @@ public class TilingEditor : EditorWindow {
     private GUIStyle _labelStyle2;
     private int paintcolor = 0;
     private bool painting = false;
-    public static int[,] tiles = new int[10,15];
+    public static int [,] tilestype;
+    public OurTile[,] tiles;
 
-    [MenuItem("CustomTools/Tiling Editor")]
+    //[MenuItem("CustomTools/Tiling Editor")]
 
-    public static void OpenWindow()
+    public static void OpenWindow(OurTile[,] tiles)
     {
         var w = GetWindow<TilingEditor>();
         w.wantsMouseMove = true;
+        tilestype = new int[Data._high, Data._width];
+        w.tiles = tiles;
+        for (int i = 0; i < Data._high; i++)
+        {
+            for (int j = 0; j < Data._width; j++)
+            {
+                tilestype[i, j] = w.tiles[i,j]._type;
+            }
+        }
         w.Show();
     }
     public void fillGrid()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Data._high; i++)
         {
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < Data._width; j++)
             {
-                tiles[i, j] = Random.Range(0, 6);
+                tilestype[i,j] = Random.Range(0, 6);
             }
         }
     }
@@ -38,9 +48,17 @@ public class TilingEditor : EditorWindow {
         _labelStyle.alignment = TextAnchor.MiddleCenter;
         _labelStyle2 = new GUIStyle();
         _labelStyle2.alignment = TextAnchor.MiddleCenter;
+        int morewidth = 24 * (Data._width-15);
+        if (morewidth < 0) morewidth = 0;
+        int morehigh = 24 * (Data._high - 10);
+        if (morehigh < 10) morehigh = 0;
+        maxSize = new Vector2(385 + morewidth, 700 + morehigh);
+        minSize = new Vector2(385 + morewidth, 700 + morehigh);
+        
 
-        maxSize = new Vector2(400, 700);
-        minSize = new Vector2(400, 700);
+
+
+
         EditorGUILayout.LabelField("Tiling Editor", _labelStyle);
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -52,12 +70,12 @@ public class TilingEditor : EditorWindow {
 
         var col = GUI.backgroundColor;
         EditorGUILayout.BeginVertical();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Data._high; i++)
         {
             EditorGUILayout.BeginHorizontal();
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < Data._width; j++)
             {
-                switch (tiles[i,j])
+                switch (tilestype[i,j])
                 {
                     case 0:
                         GUI.backgroundColor = Color.white;
@@ -83,15 +101,13 @@ public class TilingEditor : EditorWindow {
                 {
                     if (!painting)
                     {
-                        /*var pop = ScriptableObject.CreateInstance<EmptyWindow>();
-                        pop.position = new Rect(Screen.width, Screen.height / 2, 250, 250);
-                        pop.ShowPopup();*/
-                        TileEdit.OpenWindow(tiles[i,j], i, j);
+                        
+                        TileEdit.OpenWindow(tilestype[i,j], i, j, tiles[i,j]);
 
                     }
                     else
                     {
-                        tiles[i, j] = paintcolor;
+                        tilestype[i, j] = paintcolor;
                         Repaint();
                     }
                 }
@@ -107,11 +123,11 @@ public class TilingEditor : EditorWindow {
 
         if (GUILayout.Button("Clear"))
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < Data._high; i++)
             {
-                for (int j = 0; j < 15; j++)
+                for (int j = 0; j < Data._width; j++)
                 {
-                    tiles[i, j] = 0;
+                    tilestype[i, j] = 0;
                 }
             }
         }
@@ -172,6 +188,14 @@ public class TilingEditor : EditorWindow {
         }
         EditorGUILayout.Space();
         EditorGUILayout.Space();
+
+        for (int i = 0; i < Data._high; i++)
+        {
+            for (int j = 0; j < Data._width; j++)
+            {
+                tiles[i, j]._type = tilestype[i, j];
+            }
+        }
 
         if (GUILayout.Button("Close"))
             Close();
