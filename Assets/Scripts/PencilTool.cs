@@ -11,10 +11,9 @@ public class PencilTool : MonoBehaviour {
     public float gridZ;
     public static bool pencilOn;
 
-	
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         if (!Application.isEditor || gridX == 0 || gridY == 0 || gridZ == 0) return;
         Transform[] boi = transform.GetComponentsInChildren<Transform>(); //conseguimos los childs
 
@@ -37,6 +36,15 @@ public class PencilTool : MonoBehaviour {
    
     public void Placing()
     {
-        Debug.Log("LALADSLALASLSA");
+       
+        Debug.Log("Soy un tile prefabricado");
+        //Tile = a Tile del prefab creado en la ventada de creador de prefabs
+    }
+    public void Deleting()
+    {
+        Debug.Log("Estoy de fabrica");
+        //_tipe = 0;
+        
+
     }
 }
