@@ -26,6 +26,10 @@ public class MouseEvent : Editor
                 {
                     _target.Placing();
                 }
+                if (PencilTool.delOn == true)
+                {
+                    _target.Removing();
+                }
             }
         }
     }

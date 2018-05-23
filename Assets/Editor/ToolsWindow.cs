@@ -42,6 +42,8 @@ public class ToolsWindow : EditorWindow
             {
                 PencilTool.pencilOn = true;
                 Debug.Log(PencilTool.pencilOn);
+                PencilTool.delOn = false;
+
             }
             else if (PencilTool.pencilOn == true)
             {
@@ -62,7 +64,21 @@ public class ToolsWindow : EditorWindow
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
         var buttonPen = GUILayout.Button("move", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(30));
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var buttonBrush = GUILayout.Button("del", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(30));
+        if (GUILayout.Button("Remove", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(30)))
+        {
+            if (PencilTool.delOn == false)
+            {
+                PencilTool.delOn = true;
+                Debug.Log(PencilTool.delOn);
+                PencilTool.pencilOn = false;
+            }
+            else if (PencilTool.delOn == true)
+            {
+                PencilTool.delOn = false;
+                Debug.Log(PencilTool.delOn);
+
+            }
+        }
 
     }
     private void Tiles()

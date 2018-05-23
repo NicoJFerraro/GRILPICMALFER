@@ -10,7 +10,13 @@ public class PencilTool : MonoBehaviour {
     public float gridY;
     public float gridZ;
     public static bool pencilOn;
+    public static bool delOn;
 
+
+    private void Start()
+    {
+        OurTile bla = gameObject.GetComponent("Ourtile") as OurTile;
+    }
 
     // Update is called once per frame
     void Update () {
@@ -36,15 +42,14 @@ public class PencilTool : MonoBehaviour {
    
     public void Placing()
     {
-       
         Debug.Log("Soy un tile prefabricado");
-        //Tile = a Tile del prefab creado en la ventada de creador de prefabs
+
+        GetComponent<OurTile>()._type = 5;
     }
-    public void Deleting()
+    public void Removing()
     {
         Debug.Log("Estoy de fabrica");
-        //_tipe = 0;
-        
 
+        GetComponent<OurTile>()._type = 0;
     }
 }
