@@ -17,8 +17,8 @@ public class LevelMaker : EditorWindow
     private bool PlatformMap;
     private bool showFoldout;
 
-    private float high;
-    private float width;
+    private int high;
+    private int width;
 
     private string newMapName;
     private string SearchName;
@@ -82,6 +82,7 @@ public class LevelMaker : EditorWindow
         EditorGUILayout.Space();
         Grill();
         Assets();
+        GridCreator();
         //if (GUILayout.Button("Add Asset"))
         //{
         //    AddNew();
@@ -96,8 +97,8 @@ public class LevelMaker : EditorWindow
     }
     private void Grill()
     {
-        high = EditorGUILayout.FloatField("High", high);
-        width = EditorGUILayout.FloatField("Width", width);
+        Data._high = EditorGUILayout.IntField("High", Data._high);
+        Data._width = EditorGUILayout.IntField("Width", Data._width);
     }
     private void Assets()
     {
@@ -140,4 +141,12 @@ public class LevelMaker : EditorWindow
         //AssetsDrag.Add(null);
     }
     
+    private void GridCreator()
+    {
+        if(GUILayout.Button("Create Grid", GUILayout.Width(100), GUILayout.ExpandWidth(false), GUILayout.Height(25)))
+        {
+            GameObject.Instantiate(Resources.Load("Grid", typeof(OurGrid)) as OurGrid);
+        }
+        
+    }
 }
