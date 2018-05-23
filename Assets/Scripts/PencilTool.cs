@@ -10,7 +10,6 @@ public class PencilTool : MonoBehaviour {
     public float gridY;
     public float gridZ;
     public static bool pencilOn;
-    public GameObject tilePrefab;
 
 	
 	

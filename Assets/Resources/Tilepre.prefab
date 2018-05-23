@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4296799647816732}
   - component: {fileID: 212880745679054942}
   - component: {fileID: 114288033860096634}
+  - component: {fileID: 114002555975197276}
   m_Layer: 0
   m_Name: Tilepre
   m_TagString: Untagged
@@ -41,6 +42,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114002555975197276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1814591435316880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb716104404b814d914ca4e12bf91c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridX: 0
+  gridY: 0
+  gridZ: 0
+  tilePrefab: {fileID: 0}
 --- !u!114 &114288033860096634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,9 +68,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377440602ff968e4180d4863f57e9629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _objectsInside: []
   _sr: {fileID: 212880745679054942}
   _parenrgrid: {fileID: 0}
-  _tipe: 0
+  _type: 0
+  _i: 0
+  _j: 0
 --- !u!212 &212880745679054942
 SpriteRenderer:
   m_ObjectHideFlags: 1

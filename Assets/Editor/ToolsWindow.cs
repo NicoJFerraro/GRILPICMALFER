@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
+
 public class ToolsWindow : EditorWindow
 {
     [MenuItem("CustomTools/ToolsWindow")]
@@ -34,7 +35,20 @@ public class ToolsWindow : EditorWindow
     private void Pencils()
     {
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var buttonPen = GUILayout.Button("Pen", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(30));
+        //var buttonPen = GUILayout.Button("Pen", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(30));
+        if (GUILayout.Button("Pen", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(30)))
+        {
+            if (PencilTool.pencilOn == false)
+            {
+                PencilTool.pencilOn = true;
+                Debug.Log(PencilTool.pencilOn);
+            }
+            else if (PencilTool.pencilOn == true)
+            {
+                PencilTool.pencilOn = false;
+                Debug.Log(PencilTool.pencilOn);
+            }
+        }     
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
         var buttonBrush = GUILayout.Button("Brush", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(30));
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
