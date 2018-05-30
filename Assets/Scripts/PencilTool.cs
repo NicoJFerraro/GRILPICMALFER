@@ -11,7 +11,8 @@ public class PencilTool : MonoBehaviour {
     public float gridZ;
     public static bool pencilOn;
     public static bool delOn;
-
+    public static bool copyDragOn;
+    public static bool brushSelected;
 
     private void Start()
     {
@@ -55,5 +56,11 @@ public class PencilTool : MonoBehaviour {
         GetComponent<OurTile>()._type = 3;
         UnityEditor.SceneView.RepaintAll();
 
+    }
+    public void CopyDrag()
+    {
+        Debug.Log("tengo un gemelo xdxd");
+
+        GameObject.Instantiate(gameObject);
     }
 }

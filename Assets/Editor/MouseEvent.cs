@@ -32,6 +32,11 @@ public class MouseEvent : Editor
                     _target.Placing();
                     HandleUtility.Repaint();
                 }
+                if (PencilTool.copyDragOn == true)
+                {
+                    _target.CopyDrag();
+                    HandleUtility.Repaint();
+                }
             }
         }
     }

@@ -28,8 +28,7 @@ public class LevelMaker : EditorWindow
     [MenuItem("CustomTools/LevelMaker")]
 
     public static void OpenWindow()
-    {
-        
+    {    
         LevelMaker myWindow = (LevelMaker)GetWindow(typeof(LevelMaker));
         myWindow.wantsMouseMove = true;
         myWindow.Show();
@@ -37,7 +36,6 @@ public class LevelMaker : EditorWindow
     private void OnGUI()
     {
         All();
-
     }
 
     private void All()
@@ -63,8 +61,6 @@ public class LevelMaker : EditorWindow
         EditorGUILayout.LabelField("Level Maker", myStyle);
         EditorGUILayout.Space();
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(100, 2), Color.black);
-
-
     }
 
     private void NewMap()
