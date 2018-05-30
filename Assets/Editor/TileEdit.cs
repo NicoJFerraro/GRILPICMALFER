@@ -36,6 +36,7 @@ public class TileEdit : EditorWindow
         maxSize = new Vector2(300, 600);
         minSize = new Vector2(300, 600);
         EditorGUILayout.LabelField("Tile Edit", _labelStyle);
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.red);
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 

@@ -39,6 +39,5 @@ public class OurGrid : MonoBehaviour {
                 _grid[i, j] = _instatitile;
             }
         }
-        
     }
 }
