@@ -45,11 +45,15 @@ public class PencilTool : MonoBehaviour {
         Debug.Log("Soy un tile prefabricado");
 
         GetComponent<OurTile>()._type = 5;
+        UnityEditor.SceneView.RepaintAll();
+
     }
     public void Removing()
     {
         Debug.Log("Estoy de fabrica");
 
-        GetComponent<OurTile>()._type = 0;
+        GetComponent<OurTile>()._type = 3;
+        UnityEditor.SceneView.RepaintAll();
+
     }
 }

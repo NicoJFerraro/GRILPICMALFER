@@ -22,13 +22,15 @@ public class MouseEvent : Editor
             //RaycastHit2D hit = new RaycastHit2D();
             if (Physics2D.Raycast(ray.origin, ray.direction, 1000.0f))
             {
-                if (PencilTool.pencilOn == true)
-                {
-                    _target.Placing();
-                }
                 if (PencilTool.delOn == true)
                 {
                     _target.Removing();
+                    SceneView.RepaintAll();
+                }
+                if (PencilTool.pencilOn == true)
+                {
+                    _target.Placing();
+                    HandleUtility.Repaint();
                 }
             }
         }

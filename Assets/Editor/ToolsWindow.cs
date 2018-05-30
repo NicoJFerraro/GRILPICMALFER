@@ -41,14 +41,14 @@ public class ToolsWindow : EditorWindow
             if (PencilTool.pencilOn == false)
             {
                 PencilTool.pencilOn = true;
-                Debug.Log(PencilTool.pencilOn);
+                Debug.Log("Pencil Tool" + PencilTool.pencilOn);
                 PencilTool.delOn = false;
 
             }
             else if (PencilTool.pencilOn == true)
             {
                 PencilTool.pencilOn = false;
-                Debug.Log(PencilTool.pencilOn);
+                Debug.Log("Pencil Tool" + PencilTool.pencilOn);
             }
         }     
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
@@ -69,13 +69,13 @@ public class ToolsWindow : EditorWindow
             if (PencilTool.delOn == false)
             {
                 PencilTool.delOn = true;
-                Debug.Log(PencilTool.delOn);
+                Debug.Log("Del Tool" + PencilTool.delOn);
                 PencilTool.pencilOn = false;
             }
             else if (PencilTool.delOn == true)
             {
                 PencilTool.delOn = false;
-                Debug.Log(PencilTool.delOn);
+                Debug.Log("Del Tool" + PencilTool.delOn);
 
             }
         }
