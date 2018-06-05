@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Data
 {
-    public static int _high = 12;
-    public static int _width = 18;
-	
+    public static int _high;
+    public static int _width;
+    public static int _bigHigh;
+    public static int _bigWidth;
+
 }

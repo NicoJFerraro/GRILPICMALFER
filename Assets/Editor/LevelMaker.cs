@@ -72,7 +72,10 @@ public class LevelMaker : EditorWindow
 
         toogleGroupActivated = EditorGUILayout.BeginToggleGroup("New Map", toogleGroupActivated);
         EditorGUILayout.Space();
+        FolderManagement();
+        EditorGUILayout.Space();
         EditorGUILayout.LabelField("Type", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
         RpgMap = EditorGUILayout.Toggle("RPG", RpgMap);
         if (RpgMap) PlatformMap = false;
         if (!RpgMap) PlatformMap = true;
@@ -80,26 +83,46 @@ public class LevelMaker : EditorWindow
         if (PlatformMap) RpgMap = false;
         if (!PlatformMap) RpgMap = true;
         EditorGUILayout.Space();
-        Grill();
+        EditorGUILayout.Space();
+        BigGrill();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        Grid();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
         Assets();
-        GridCreator();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        //GridCreator();
+        CreateButom();
         //if (GUILayout.Button("Add Asset"))
         //{
         //    AddNew();
         //}
 
-        FolderManagement();
+
 
 
         EditorGUILayout.EndToggleGroup();
 
 
     }
-    private void Grill()
+    private void BigGrill()
     {
+        EditorGUILayout.LabelField("General Grid", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
+        Data._bigHigh = EditorGUILayout.IntField("High", Data._bigHigh);
+        Data._bigWidth = EditorGUILayout.IntField("Width", Data._bigWidth);
+    }
+    private void Grid()
+    {
+        EditorGUILayout.LabelField("Inside Grid", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
         Data._high = EditorGUILayout.IntField("High", Data._high);
         Data._width = EditorGUILayout.IntField("Width", Data._width);
+
     }
+    
     private void Assets()
     {
 
@@ -117,22 +140,9 @@ public class LevelMaker : EditorWindow
     private void FolderManagement()
     {
 
-        EditorGUILayout.LabelField("Map name: ", GUILayout.Width(75));
+        EditorGUILayout.LabelField("Name: ", GUILayout.Width(75));
         newMapName = EditorGUILayout.TextField(newMapName);
-        if (newMapName != null && GUILayout.Button("Create", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(25)))
-        {
-
-            if (!AssetDatabase.IsValidFolder(newMapName))
-            {
-
-                AssetDatabase.CreateFolder("Assets", newMapName);
-
-            }
-        }
-        if (newMapName == null)
-        {
-            EditorGUILayout.HelpBox("Map name not found", MessageType.Warning);
-        }
+        
 
     }
 
@@ -145,8 +155,27 @@ public class LevelMaker : EditorWindow
     {
         if(GUILayout.Button("Create Grid", GUILayout.Width(100), GUILayout.ExpandWidth(false), GUILayout.Height(25)))
         {
-            GameObject.Instantiate(Resources.Load("Grid", typeof(OurGrid)) as OurGrid);
+            GameObject.Instantiate(Resources.Load("BigGrid", typeof(BigGrid)) as BigGrid);
         }
         
+    }
+    
+    private void CreateButom()
+    {
+        if (newMapName != null && GUILayout.Button("Create", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(25)))
+        {
+            GameObject.Instantiate(Resources.Load("BigGrid", typeof(BigGrid)) as BigGrid);
+
+            if (!AssetDatabase.IsValidFolder(newMapName))
+            {
+
+                AssetDatabase.CreateFolder("Assets", newMapName);
+
+            }
+        }
+        if (newMapName == null)
+        {
+            EditorGUILayout.HelpBox("Map name not found", MessageType.Warning);
+        }
     }
 }

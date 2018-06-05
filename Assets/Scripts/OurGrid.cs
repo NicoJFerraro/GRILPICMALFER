@@ -10,6 +10,9 @@ public class OurGrid : MonoBehaviour {
     int[,] _gridtipes;
     public OurTile[,] _grid;
 
+    public int _j;
+    public int _i;
+
 
     void Start () {
         _grid = new OurTile[Data._high, Data._width];
