@@ -12,6 +12,9 @@ public class TileEdit : EditorWindow
     private int i;
     private int j;
     private Objects _object;
+    private int _eventNumber;
+    private int _eventType;
+    private bool _ontime;
 
 
     public static void OpenWindow(int tile, int i, int j, OurTile tilet) 
@@ -21,6 +24,7 @@ public class TileEdit : EditorWindow
         w.ttile = tilet;
         w.i = i;
         w.j = j;
+        w._ontime = true;
         w.Show();
     }
 
@@ -52,11 +56,11 @@ public class TileEdit : EditorWindow
                 break;
             case 2:
                 GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile3"), ScaleMode.ScaleToFit);
-                EditorGUILayout.LabelField("Enemy tile", _labelStyle2);
+                EditorGUILayout.LabelField("Damage tile", _labelStyle2);
                 break;
             case 3:
                 GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile4"), ScaleMode.ScaleToFit);
-                EditorGUILayout.LabelField("NPC tile", _labelStyle2);
+                EditorGUILayout.LabelField("Door tile", _labelStyle2);
                 break;
             case 4:
                 GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile5"), ScaleMode.ScaleToFit);
@@ -64,7 +68,7 @@ public class TileEdit : EditorWindow
                 break;
             case 5:
                 GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile6"), ScaleMode.ScaleToFit);
-                EditorGUILayout.LabelField("Door/Trapdoor tile", _labelStyle2);
+                EditorGUILayout.LabelField("Water tile", _labelStyle2);
                 break;
         }
         EditorGUILayout.Space();
@@ -158,6 +162,73 @@ public class TileEdit : EditorWindow
         }
 
             EditorGUILayout.Space();
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(100, 2), Color.black);
+        EditorGUILayout.Space();
+
+
+        if (ttile._type == 3)
+        {
+            ttile._activationCode = EditorGUILayout.IntField("Event code", ttile._activationCode);
+        }
+
+
+        if (ttile._type == 4)
+        {
+            string _key = (ttile._i + ttile._j).ToString();
+            if (_ontime)
+            {
+                if (Data._events.ContainsKey(_key))
+                {
+                    _eventNumber = Data._events[_key]._activationCode;
+                    _eventType = Data._events[_key]._switchType;
+                }
+                _ontime = false;
+            }
+            _eventNumber = EditorGUILayout.IntField("Event code", _eventNumber);
+            if(_eventNumber <0)
+            {
+                _eventNumber = 0;
+                Repaint();
+                return;
+            }
+            if (Data._events.ContainsKey(_key))
+            {
+                EditorGUILayout.LabelField("Current code: " + Data._events[_key]._activationCode);
+            }
+            _eventType = EditorGUILayout.IntField("Switch type", _eventType);
+            if (_eventType < 0)
+            {
+                _eventType = 0;
+                Repaint();
+                return;
+            }
+            if (_eventType > 2)
+            {
+                _eventType = 2;
+                Repaint();
+                return;
+            }
+            if (Data._events.ContainsKey(_key))
+            {
+                EditorGUILayout.LabelField("Current type: " + Data._events[_key]._switchType);
+            }
+                EditorGUILayout.Space();
+
+            if (GUILayout.Button("Add Event"))
+            {
+                if (Data._events.ContainsKey(_key))
+                {
+                    Data._events.Remove(_key);
+                }
+                Event evento = new Event();
+                evento._activationCode = _eventNumber;
+                evento._switchType = _eventType;
+                Data._events.Add(_key, evento);
+            }
+
+        }
+
+        EditorGUILayout.Space();
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(100, 2), Color.black);
 
         EditorGUILayout.Space();

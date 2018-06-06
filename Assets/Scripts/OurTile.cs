@@ -14,6 +14,7 @@ public class OurTile : MonoBehaviour {
     public int _type;
     public int _i;
     public int _j;
+    public int _activationCode;
 
 	// Use this for initialization
 	void Start () {
@@ -56,7 +57,7 @@ public class OurTile : MonoBehaviour {
             case 5: // Agua
                 _sr.sprite = Resources.Load("tile6", typeof(Sprite)) as Sprite;
                 _cldr2d.isTrigger = true;
-                gameObject.layer = 2;
+                gameObject.layer = 4;
                 break;
         }
     }
