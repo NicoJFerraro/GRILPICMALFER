@@ -43,12 +43,12 @@ public class OurTile : MonoBehaviour {
                 _cldr2d.isTrigger = true;
                 gameObject.layer = 10;
                 break;
-            case 3: // NPC
+            case 3: // Puerta
                 _sr.sprite = Resources.Load("tile4", typeof(Sprite)) as Sprite;
                 _cldr2d.isTrigger = false;
                 gameObject.layer = 13;
                 break;
-            case 4: // Interuptor
+            case 4: // Interuptor/llave
                 _sr.sprite = Resources.Load("tile5", typeof(Sprite)) as Sprite;
                 _cldr2d.isTrigger = true;
                 gameObject.layer = 12;
@@ -58,6 +58,18 @@ public class OurTile : MonoBehaviour {
                 _cldr2d.isTrigger = true;
                 gameObject.layer = 2;
                 break;
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(_type == 4)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Destroyable"))
+            {
+                //collision.gameObject.Get
+                GameObject.Destroy(collision.gameObject);
+            }
         }
     }
 }
