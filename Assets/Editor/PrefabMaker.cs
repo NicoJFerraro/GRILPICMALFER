@@ -17,6 +17,7 @@ public class PrefabMaker : EditorWindow {
         mywindow.wantsMouseMove = true;
         mywindow.Show();
     }
+    //GameObject prefab = PrefabUtility.CreatePrefab("Assets/Whatever.prefab", (GameObject)Selection.object, ReplacePrefabOptions.ReplaceNameBased);
 
     private void OnGUI()
     {
@@ -48,7 +49,10 @@ public class PrefabMaker : EditorWindow {
 
     }
 
-
-
-
 }
+
+
+
+
+
+
