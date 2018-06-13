@@ -9,8 +9,10 @@ public class TilingEditor : EditorWindow {
     private GUIStyle _labelStyle2;
     private int paintcolor = 0;
     private bool painting = false;
+    private bool locking = false;
     public static int [,] tilestype;
     public OurTile[,] tiles;
+    public bool[,] lockedTiles;
 
     //[MenuItem("CustomTools/Tiling Editor")]
 
@@ -27,6 +29,7 @@ public class TilingEditor : EditorWindow {
                 tilestype[i, j] = w.tiles[i,j]._type;
             }
         }
+        w.lockedTiles = new bool[Data._high, Data._width];
         w.Show();
     }
     public void fillGrid()
@@ -35,6 +38,7 @@ public class TilingEditor : EditorWindow {
         {
             for (int j = 0; j < Data._width; j++)
             {
+                if(!lockedTiles[i,j])
                 tilestype[i,j] = Random.Range(0, 6);
             }
         }
@@ -52,9 +56,11 @@ public class TilingEditor : EditorWindow {
         if (morewidth < 0) morewidth = 0;
         int morehigh = 24 * (Data._high - 10);
         if (morehigh < 10) morehigh = 0;
-        maxSize = new Vector2(385 + morewidth, 700 + morehigh);
-        minSize = new Vector2(385 + morewidth, 700 + morehigh);
-        
+        maxSize = new Vector2(410 + morewidth, 700 + morehigh);
+        minSize = new Vector2(410 + morewidth, 700 + morehigh);
+
+        if (painting) locking = false;
+        if (locking) painting = false;
 
 
 
@@ -68,8 +74,12 @@ public class TilingEditor : EditorWindow {
 
         EditorGUILayout.Space();
 
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        EditorGUILayout.Space();
+
         var col = GUI.backgroundColor;
         EditorGUILayout.BeginVertical();
+        string mark = "";
         for (int i = 0; i < Data._high; i++)
         {
             EditorGUILayout.BeginHorizontal();
@@ -96,19 +106,26 @@ public class TilingEditor : EditorWindow {
                         GUI.backgroundColor = Color.blue;
                         break;
                 }
-
-                if (GUILayout.Button("", GUILayout.Width(20), GUILayout.ExpandWidth(false), GUILayout.Height(20)))
+                if (lockedTiles[i, j]) mark = "X";
+                else mark = "";
+                if (GUILayout.Button(mark, GUILayout.Width(20), GUILayout.ExpandWidth(false), GUILayout.Height(20)))
                 {
-                    if (!painting)
+                    if (painting)
                     {
-                        
-                        TileEdit.OpenWindow(tilestype[i,j], i, j, tiles[i,j]);
-
+                        if (!lockedTiles[i, j])
+                        {
+                            tilestype[i, j] = paintcolor;
+                            Repaint();
+                        }
+                    }
+                    else if (locking)
+                    {
+                        lockedTiles[i, j] = !lockedTiles[i, j];
+                        Repaint();
                     }
                     else
                     {
-                        tilestype[i, j] = paintcolor;
-                        Repaint();
+                        TileEdit.OpenWindow(tilestype[i, j], i, j, tiles[i, j]);
                     }
                 }
             }
@@ -120,6 +137,8 @@ public class TilingEditor : EditorWindow {
         GUI.backgroundColor = col;
 
         EditorGUILayout.Space();
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        EditorGUILayout.Space();
 
         if (GUILayout.Button("Clear"))
         {
@@ -127,6 +146,7 @@ public class TilingEditor : EditorWindow {
             {
                 for (int j = 0; j < Data._width; j++)
                 {
+                    if(!lockedTiles[i,j])
                     tilestype[i, j] = 0;
                 }
             }
@@ -134,23 +154,38 @@ public class TilingEditor : EditorWindow {
 
         EditorGUILayout.Space();
 
-        EditorGUILayout.HelpBox("Select a tile out of paint mode to see details", MessageType.Info);
+        EditorGUILayout.HelpBox("Select a tile out of paint and lock mode to see details", MessageType.Info);
+
+        EditorGUILayout.Space();
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        EditorGUILayout.Space();
+
+        locking = EditorGUILayout.Toggle("Lock mode", locking);
+
+        EditorGUILayout.Space();
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        EditorGUILayout.Space();
+
 
         painting = EditorGUILayout.Toggle("Paint mode", painting);
 
+        EditorGUILayout.Space();
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        EditorGUILayout.Space();
+
         EditorGUILayout.BeginHorizontal();
         GUI.backgroundColor = Color.white;
-        if (GUILayout.Button("", GUILayout.Width(60), GUILayout.ExpandWidth(false), GUILayout.Height(60))) paintcolor = 0;
+        if (GUILayout.Button("", GUILayout.Width(30), GUILayout.ExpandWidth(false), GUILayout.Height(30))) paintcolor = 0;
         GUI.backgroundColor = Color.black;
-        if (GUILayout.Button("", GUILayout.Width(60), GUILayout.ExpandWidth(false), GUILayout.Height(60))) paintcolor = 1;
+        if (GUILayout.Button("", GUILayout.Width(30), GUILayout.ExpandWidth(false), GUILayout.Height(30))) paintcolor = 1;
         GUI.backgroundColor = Color.red;
-        if (GUILayout.Button("", GUILayout.Width(60), GUILayout.ExpandWidth(false), GUILayout.Height(60))) paintcolor = 2;
+        if (GUILayout.Button("", GUILayout.Width(30), GUILayout.ExpandWidth(false), GUILayout.Height(30))) paintcolor = 2;
         GUI.backgroundColor = Color.green;
-        if (GUILayout.Button("", GUILayout.Width(60), GUILayout.ExpandWidth(false), GUILayout.Height(60))) paintcolor = 3;
+        if (GUILayout.Button("", GUILayout.Width(30), GUILayout.ExpandWidth(false), GUILayout.Height(30))) paintcolor = 3;
         GUI.backgroundColor = Color.yellow;
-        if (GUILayout.Button("", GUILayout.Width(60), GUILayout.ExpandWidth(false), GUILayout.Height(60))) paintcolor = 4;
+        if (GUILayout.Button("", GUILayout.Width(30), GUILayout.ExpandWidth(false), GUILayout.Height(30))) paintcolor = 4;
         GUI.backgroundColor = Color.blue;
-        if (GUILayout.Button("", GUILayout.Width(60), GUILayout.ExpandWidth(false), GUILayout.Height(60))) paintcolor = 5;
+        if (GUILayout.Button("", GUILayout.Width(30), GUILayout.ExpandWidth(false), GUILayout.Height(30))) paintcolor = 5;
         EditorGUILayout.EndHorizontal();
         GUI.backgroundColor = col;
         EditorGUILayout.Space();
@@ -162,27 +197,27 @@ public class TilingEditor : EditorWindow {
         switch (paintcolor)
         {
             case 0:
-                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile1"), ScaleMode.ScaleToFit);
+                GUI.DrawTexture(GUILayoutUtility.GetRect(50, 50), (Texture2D)Resources.Load("tile1"), ScaleMode.ScaleToFit);
                 EditorGUILayout.LabelField("Floor tile", _labelStyle2);
                 break;
             case 1:
-                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile2"), ScaleMode.ScaleToFit);
+                GUI.DrawTexture(GUILayoutUtility.GetRect(50, 50), (Texture2D)Resources.Load("tile2"), ScaleMode.ScaleToFit);
                 EditorGUILayout.LabelField("Wall/Obstacle tile", _labelStyle2);
                 break;
             case 2:
-                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile3"), ScaleMode.ScaleToFit);
+                GUI.DrawTexture(GUILayoutUtility.GetRect(50, 50), (Texture2D)Resources.Load("tile3"), ScaleMode.ScaleToFit);
                 EditorGUILayout.LabelField("Enemy tile", _labelStyle2);
                 break;
             case 3:
-                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile4"), ScaleMode.ScaleToFit);
+                GUI.DrawTexture(GUILayoutUtility.GetRect(50, 50), (Texture2D)Resources.Load("tile4"), ScaleMode.ScaleToFit);
                 EditorGUILayout.LabelField("NPC tile", _labelStyle2);
                 break;
             case 4:
-                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile5"), ScaleMode.ScaleToFit);
+                GUI.DrawTexture(GUILayoutUtility.GetRect(50, 50), (Texture2D)Resources.Load("tile5"), ScaleMode.ScaleToFit);
                 EditorGUILayout.LabelField("Interactible tile", _labelStyle2);
                 break;
             case 5:
-                GUI.DrawTexture(GUILayoutUtility.GetRect(150, 150), (Texture2D)Resources.Load("tile6"), ScaleMode.ScaleToFit);
+                GUI.DrawTexture(GUILayoutUtility.GetRect(50, 50), (Texture2D)Resources.Load("tile6"), ScaleMode.ScaleToFit);
                 EditorGUILayout.LabelField("Door/Trapdoor tile", _labelStyle2);
                 break;
         }

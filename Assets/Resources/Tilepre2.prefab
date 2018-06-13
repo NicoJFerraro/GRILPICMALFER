@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4296799647816732}
   - component: {fileID: 212880745679054942}
   - component: {fileID: 114288033860096634}
-  - component: {fileID: 114002555975197276}
-  - component: {fileID: 61016902782249888}
+  - component: {fileID: 114408451085822474}
+  - component: {fileID: 61628548706025876}
   m_Layer: 0
-  m_Name: Tilepre
+  m_Name: Tilepre2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61016902782249888
+--- !u!61 &61628548706025876
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -62,27 +62,12 @@ BoxCollider2D:
     oldSize: {x: 0.4, y: 0.4}
     newSize: {x: 0.4, y: 0.4}
     adaptiveTilingThreshold: 0.5
-    drawMode: 1
+    drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
---- !u!114 &114002555975197276
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1814591435316880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cb716104404b814d914ca4e12bf91c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridX: 0
-  gridY: 0
-  gridZ: 0
-  iWasPbyHTile: 0
 --- !u!114 &114288033860096634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +86,19 @@ MonoBehaviour:
   _type: 0
   _i: 0
   _j: 0
+  _activationCode: 0
+  _key: 
+--- !u!114 &114408451085822474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1814591435316880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea72e8eb480d7c9418221a69dd990b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212880745679054942
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -139,7 +137,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 1
+  m_DrawMode: 0
   m_Size: {x: 0.4, y: 0.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

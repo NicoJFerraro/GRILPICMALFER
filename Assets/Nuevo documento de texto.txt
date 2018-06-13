@@ -1,3 +1,0 @@
-Permitir cambiar ancho y alto del tiling
-Crear clase Tile con propiedades y objetos dentro
-programar

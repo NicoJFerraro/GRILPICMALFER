@@ -4,59 +4,148 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
+[CustomEditor(typeof(TilePicker))]
+
 public class PickTile : EditorWindow
 {
     private Vector2 _scrollPosition;
     private GUIStyle _labelStyle;
     private GUIStyle myStyle;
-
     private void OnGUI()
     {
-        Font();
+         Font();
         _labelStyle = new GUIStyle();
         _labelStyle.fontStyle = FontStyle.Italic;
         _labelStyle.alignment = TextAnchor.MiddleCenter;
 
-        EditorGUILayout.BeginVertical(GUILayout.Height(110));
+        EditorGUILayout.BeginVertical(GUILayout.Height(100));
         _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition,false, true);
           
-        EditorGUILayout.LabelField("Elige un tile",_labelStyle, GUILayout.ExpandWidth(true), GUILayout.Width(150));
+        EditorGUILayout.LabelField("Type Picker",_labelStyle, GUILayout.ExpandWidth(true), GUILayout.Width(150));
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile1 = GUILayout.Button("Opcion 1",GUILayout.ExpandWidth(true));
+        if (GUILayout.Button("Type Black", GUILayout.ExpandWidth(true)))
+        {
+            PencilTool.pick1 = true;
+            PencilTool.pick2 = true;
+            PencilTool.pick3 = true;
+            PencilTool.pick4 = true;
+            PencilTool.pick5 = true;
+            PencilTool.pick6 = true;
+            PencilTool.showYOwnP = false;
+            Close();
+
+
+        }
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile2 = GUILayout.Button("Opcion 2",  GUILayout.ExpandWidth(true));
+        if (GUILayout.Button("Type Red", GUILayout.ExpandWidth(true)))
+        {
+            PencilTool.pick2 = true;
+            PencilTool.pick1 = false;
+            PencilTool.pick3 = false;
+            PencilTool.pick4 = false;
+            PencilTool.pick5 = false;
+            PencilTool.pick6 = false;
+            PencilTool.showYOwnP = false;
+
+            Close();
+
+
+        }
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile3 = GUILayout.Button("Opcion 2", GUILayout.ExpandWidth(true));
+        if (GUILayout.Button("Type Green", GUILayout.ExpandWidth(true)))
+        {
+            PencilTool.pick3 = true;
+            PencilTool.pick1 = false;
+            PencilTool.pick2 = false;
+            PencilTool.pick4 = false;
+            PencilTool.pick5 = false;
+            PencilTool.pick6 = false;
+            PencilTool.showYOwnP = false;
+
+            Close();
+
+
+        }
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile4 = GUILayout.Button("Opcion 2", GUILayout.ExpandWidth(true));
+        if (GUILayout.Button("Type Yellow", GUILayout.ExpandWidth(true)))
+        {
+            PencilTool.pick4 = true;
+            PencilTool.pick1 = false;
+            PencilTool.pick2 = false;
+            PencilTool.pick3 = false;
+            PencilTool.pick5 = false;
+            PencilTool.pick6 = false;
+            PencilTool.showYOwnP = false;
+
+            Close();
+
+
+        }
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile5 = GUILayout.Button("Opcion 2", GUILayout.ExpandWidth(true));
+        if (GUILayout.Button("Type Blue", GUILayout.ExpandWidth(true)))
+        {
+            PencilTool.pick5 = true;
+            PencilTool.pick1 = false;
+            PencilTool.pick2 = false;
+            PencilTool.pick3 = false;
+            PencilTool.pick4 = false;
+            PencilTool.pick6 = false;
+            PencilTool.showYOwnP = false;
+
+            Close();
+
+
+        }
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile6 = GUILayout.Button("Opcion 2", GUILayout.ExpandWidth(true));
+        if (GUILayout.Button(" Type White", GUILayout.ExpandWidth(true)))
+        {
+            PencilTool.pick6 = true;
+            PencilTool.pick1 = false;
+            PencilTool.pick2 = false;
+            PencilTool.pick3 = false;
+            PencilTool.pick4 = false;
+            PencilTool.pick5 = false;
+            PencilTool.showYOwnP = false;
+
+            Close();
+
+
+        }
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile7 = GUILayout.Button("Opcion 2", GUILayout.ExpandWidth(true));
-        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile8 = GUILayout.Button("Opcion 2", GUILayout.ExpandWidth(true));
-        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
-        var tile9 = GUILayout.Button("Opcion 2", GUILayout.ExpandWidth(true));
+        if (PencilTool.showYOwnP)
+        {
+            PencilTool.pick1 = true;
+            PencilTool.pick2 = true;
+            PencilTool.pick3 = true;
+            PencilTool.pick4 = true;
+            PencilTool.pick5 = true;
+            PencilTool.pick6 = true;
+        }
+
 
         EditorGUILayout.EndScrollView();
         EditorGUILayout.EndVertical();
 
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.red);
 
-        EditorGUILayout.LabelField("O elige tu propio tile", _labelStyle, GUILayout.ExpandWidth(true), GUILayout.Width(120));
-        if (GUILayout.Button("Añadir tile", GUILayout.ExpandWidth(true)))
+       // EditorGUILayout.LabelField("             Or pick your own", _labelStyle, GUILayout.ExpandWidth(true), GUILayout.Width(120));
+
+        /*if (GUILayout.Button("Add Tile", GUILayout.ExpandWidth(true)))
         {
-            GetWindowWithRect(typeof(AddingTile), new Rect(0, 0, 190, 150)).Show();
-        }
+            //Abre la herramienta de crear tu propio tile
+        }*/
+        PencilTool.showYOwnP = EditorGUILayout.BeginToggleGroup("             Sprite Picker", PencilTool.showYOwnP);
+        PencilTool.yOwn = (Sprite)EditorGUILayout.ObjectField("Select your sprite:", PencilTool.yOwn, typeof(Sprite), true);
+
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.red);
+        EditorGUILayout.EndToggleGroup();
 
         if (GUILayout.Button("Close", GUILayout.ExpandWidth(true)))
         {
             Close();
         }
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.red);
+
 
     }
     private void Font()
@@ -67,7 +156,7 @@ public class PickTile : EditorWindow
         myStyle.alignment = TextAnchor.MiddleCenter;
         myStyle.fontSize = 18;
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Elegir tile", myStyle);
+        EditorGUILayout.LabelField("Pick Tile", myStyle);
         EditorGUILayout.Space();
     }
 }

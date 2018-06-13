@@ -9,9 +9,12 @@ public class ToolsWindow : EditorWindow
 {
     private GUIStyle myStyle;
 
+    private Color Mcolor;
+    private Color Rcolor;
+    private Color Pcolor;
     [MenuItem("CustomTools/ToolsWindow")]
 
-
+    
 
     public static void OpenWindow()
     {
@@ -23,6 +26,8 @@ public class ToolsWindow : EditorWindow
         MoveObjects();
 
         Pencils();
+
+        Radius();
         EditorGUILayout.Space();
 
         Tiles();
@@ -34,6 +39,35 @@ public class ToolsWindow : EditorWindow
             Close();
         }
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.red);
+        SelectedButtons();
+    }
+    public void SelectedButtons()
+    {
+        if (PencilTool.pencilOn)
+        {
+            Pcolor = Color.red;
+            Rcolor = Color.white;
+            Mcolor = Color.white;
+
+        }
+        else if (PencilTool.copyDragOn)
+        {
+            Mcolor = Color.red;
+            Rcolor = Color.white;
+            Pcolor = Color.white;
+        }
+        else if (PencilTool.delOn)
+        {
+            Rcolor = Color.red;
+            Pcolor = Color.white;
+            Mcolor = Color.white;
+        }
+        else
+        {
+            Rcolor = Color.white;
+            Pcolor = Color.white;
+            Mcolor = Color.white;
+        }
     }
     private void Font()
     {
@@ -46,10 +80,13 @@ public class ToolsWindow : EditorWindow
         EditorGUILayout.LabelField("Build Tools", myStyle);
         EditorGUILayout.Space();
     }
+
     private void Pencils()
     {
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
         //var buttonPen = GUILayout.Button("Pen", GUILayout.Width(50), GUILayout.ExpandWidth(false), GUILayout.Height(30));
+        GUI.backgroundColor = Pcolor;
+
         if (GUILayout.Button("Pen", GUILayout.Width(50), GUILayout.ExpandWidth(true), GUILayout.Height(30)))
         {
             if (PencilTool.pencilOn == false)
@@ -66,13 +103,26 @@ public class ToolsWindow : EditorWindow
                 PencilTool.pencilOn = false;
                 Debug.Log("Pencil Tool" + PencilTool.pencilOn);
             }
-        }     
-        
-        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.red);
+        }
+        GUI.backgroundColor = Color.white;
+        // EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.red);
+    }
+    private void Radius()
+    {
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        if (GUILayout.Button("Radius", GUILayout.Width(50), GUILayout.ExpandWidth(true), GUILayout.Height(30)))
+        {
+            GetWindowWithRect(typeof(RadiusWindow), new Rect(0, 0, 200, 250)).Show();
+
+        }
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+
     }
     private void MoveObjects()
     {
         EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        GUI.backgroundColor = Mcolor;
+
         if (GUILayout.Button("Move", GUILayout.Width(50), GUILayout.ExpandWidth(true), GUILayout.Height(30)))
         {
             if (PencilTool.copyDragOn == false)
@@ -88,9 +138,13 @@ public class ToolsWindow : EditorWindow
                 PencilTool.copyDragOn = false;
             }
         }
-            EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        EditorGUI.DrawRect(GUILayoutUtility.GetRect(50, 2), Color.black);
+        GUI.backgroundColor = Color.white;
+
+        GUI.backgroundColor = Rcolor;
         if (GUILayout.Button("Remove", GUILayout.Width(50), GUILayout.ExpandWidth(true), GUILayout.Height(30)))
         {
+
             if (PencilTool.delOn == false)
             {
                 PencilTool.delOn = true;
@@ -102,16 +156,17 @@ public class ToolsWindow : EditorWindow
             {
                 PencilTool.delOn = false;
                 Debug.Log("Del Tool" + PencilTool.delOn);
-
             }
         }
+        GUI.backgroundColor = Color.white;
+
 
     }
     private void Tiles()
     {
         if (GUILayout.Button("Elegir Tile"))
         {
-            GetWindowWithRect(typeof(PickTile), new Rect(0, 0, 200, 400)).Show();
+            GetWindowWithRect(typeof(PickTile), new Rect(0, 0, 200, 250)).Show();
         }
     }
 
