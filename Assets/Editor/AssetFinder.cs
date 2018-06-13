@@ -9,10 +9,10 @@ public class AssetFinder : EditorWindow
     private string nName;
     private string nPath;
     public GUIStyle myStyle;
-    public GUIStyle mySecondStyle;
     private string _findName;
     public List<Object> assetList;
     private string newFolderName;
+    private Vector2 _scrollPosition;
 
     [MenuItem("CustomTools/Asset Finder")]
     public static void OpenWindow()
@@ -125,20 +125,28 @@ public class AssetFinder : EditorWindow
     private void PrefabFinder()
     {
         // Preguntar como hacer que los nombres aparezcan en  el buscador
-        EditorGUILayout.LabelField("Prefabs Finder:", myStyle);
+        EditorGUILayout.LabelField("Asset Finder:", myStyle);
         var aux = _findName;
         _findName = EditorGUILayout.TextField(aux);
         if (aux != _findName)
         {
+           
             assetList.Clear();
             string[] paths = AssetDatabase.FindAssets(_findName);
+           //string[] paths = AssetDatabase.FindAssets(_findName, searchInFolders); Se que hay que hacerlo usando el searchInFolders pero no se como
 
             for (int i = 0; i < paths.Length; i++)
             {
+                EditorGUILayout.BeginVertical(GUILayout.Height(9000));
+                _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, false, true);
                 paths[i] = AssetDatabase.GUIDToAssetPath(paths[i]);
                 var loaded = AssetDatabase.LoadAssetAtPath(paths[i], typeof(Object));
                 assetList.Add(loaded);
+                EditorGUILayout.EndScrollView();
+                EditorGUILayout.EndVertical();
+               
             }
+           
         }
 
         for (int i = 0; i < assetList.Count; i++)
